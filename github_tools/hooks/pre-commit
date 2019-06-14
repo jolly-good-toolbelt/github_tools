@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+if git diff --cached --name-only | egrep -q "\.(py|feature|rb|rst)$"; then
+    if [ -f self-check.sh ]; then
+        ./self-check.sh
+    fi
+fi
