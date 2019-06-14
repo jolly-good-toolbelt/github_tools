@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "github_tools"
+version = "2.0.0"
+description = "A collection of tools for interactive with GitHub"
+authors = ["Rackspace QE <qe-tools-contributors@rackspace.com>"]
+license = "MIT"
+
+[[tool.poetry.source]]
+name = "artifactory"
+url = "https://artifacts.rackspace.net/artifactory/api/pypi/pypi/simple/"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+requests = "^2.10"
+"github3.py" = "^1.1.0"
+
+[tool.poetry.dev-dependencies]
+pre-commit = "^1.15"
+
+[tool.poetry.scripts]
+gt-pr-checker = 'github_tools:pr_checker'
+gt-install-hook = 'github_tools:install_hooks'
+gt-assign-pr = 'github_tools:assign_pr_cli'
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+

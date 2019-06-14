@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+branchPath=$(git symbolic-ref -q HEAD)  # Get full branch path (e.g., refs/heads/myBranchName)
+branchName=${branchPath##*/}            # Get text behind the last / of the branch path
+
+firstLine=$(head -n1 $1)
+# If there is already a commit message, this is an amend so exit without any further work
+[ -n "$firstLine" ] && exit
+
+# Turn on case-insensitive regular expressions
+shopt -s nocasematch
+
+# Create needed regular expressions variables
+jiraRe='(.*[^A-Z])?([A-Z][A-Z]+-[0-9]+)'
+ffRe='.*(FF).*'
+spikeRe='.*(Spike).*'
+
+# First, check if this branch contains a JIRA ID
+if [[ "$branchName" =~ $jiraRe ]]; then
+    commitPrefix=${BASH_REMATCH[2]^^}
+    # If it also contains a key word, add that to the prefix
+    for matchRe in $ffRe $spikeRe; do
+        if [[ "$branchName" =~ $matchRe ]]; then
+            commitPrefix="$commitPrefix (${matchRe:3:-3})"
+        fi
+    done
+fi
+
+# Cycle through the remaining keywords and create a prefix if needed
+for matchRe in $ffRe $spikeRe '.*(Enhancement).*' '.*(Fix).*'; do
+    if [ -z "$commitPrefix" ] && [[ "$branchName" =~ $matchRe ]]; then
+        commitPrefix=${matchRe:3:-3}
+    fi
+done
+
+if [ -n "$commitPrefix" ]; then
+    sed -i '' "1s/^/$commitPrefix: /" $1  # Insert branch name at the start of the commit message file
+fi

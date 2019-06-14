@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+# Influenced by git-good-commit(1)
+# https://github.com/tommarshall/git-good-commit
+
+COMMIT_BACKUP_FILE=".last_commit_message.log"
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG_LINES=
+WARNINGS=
+
+# Add a warning with <line_number> and <msg>.
+add_warning() {
+  local line_number=$1
+  local warning=$2
+  WARNINGS[$line_number]="${WARNINGS[$line_number]}$warning;"
+}
+
+# Output warnings.
+display_warnings() {
+  for i in "${!WARNINGS[@]}"; do
+    printf "%-74s %s\n" "${COMMIT_MSG_LINES[$(($i-1))]}" "[line ${i}]"
+    IFS=';' read -ra WARNINGS_ARRAY <<< "${WARNINGS[$i]}"
+    for ERROR in "${WARNINGS_ARRAY[@]}"; do
+      echo -e " - ${ERROR}"
+    done
+  done
+}
+
+cp -f "$COMMIT_MSG_FILE" "$COMMIT_BACKUP_FILE"
+echo saved last commit message to "$COMMIT_BACKUP_FILE"
+
+# Read the contents of the commit msg into an array of lines.
+read_commit_message() {
+  # reset commit_msg_lines
+  COMMIT_MSG_LINES=()
+
+  # read commit message into lines array
+  while IFS= read -r; do
+
+    # trim trailing spaces from commit lines
+    shopt -s extglob
+    REPLY="${REPLY%%*( )}"
+    shopt -u extglob
+
+    # ignore comments
+    [[ $REPLY =~ ^# ]]
+    test $? -eq 0 || COMMIT_MSG_LINES+=("$REPLY")
+
+    # ignore verbose output
+    [[ $REPLY =~ ^"# ------------------------ >8 ------------------------"$ ]] && break
+
+  done < <(cat $COMMIT_MSG_FILE)
+}
+
+# Validate the contents of the commmit msg agains the good commit guidelines.
+validate_commit_message() {
+  # reset warnings
+  WARNINGS=()
+
+  # capture the subject, and remove the 'squash! ' prefix if present
+  COMMIT_SUBJECT=${COMMIT_MSG_LINES[0]/#squash! /}
+
+  # abort the commit if the message is just the pre-populated prefix
+  if [[ "${COMMIT_MSG_LINES[0]}" =~ ^.*:$ ]]; then
+      echo "Aborting commit due to unmodified commit message."
+      exit 1
+  fi
+
+  # if the commit is empty there's nothing to validate, we can return here
+  COMMIT_MSG_STR="${COMMIT_MSG_LINES[*]}"
+  test -z "${COMMIT_MSG_STR[*]// }" && return;
+
+  # Separate subject from body with a blank line
+  test ${#COMMIT_MSG_LINES[@]} -lt 1 || test -z "${COMMIT_MSG_LINES[1]}"
+  test $? -eq 0 || add_warning 2 "Separate subject from body with a blank line"
+
+  # Limit the subject line to 50 characters except in a default upstream merge message
+  if ! [[ "${COMMIT_MSG_LINES[0]}" == "Merge branch 'master'"* ]]; then
+    test "${#COMMIT_SUBJECT}" -le 50
+    test $? -eq 0 || add_warning 1 "Limit the subject line to 50 characters (${#COMMIT_SUBJECT} chars)"
+  fi
+
+  # Wrap the body at 72 characters
+  URL_REGEX='^[[:blank:]]*(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
+  for i in "${!COMMIT_MSG_LINES[@]}"; do
+    LINE_NUMBER=$((i+1))
+    test "${#COMMIT_MSG_LINES[$i]}" -le 72 || [[ ${COMMIT_MSG_LINES[$i]} =~ $URL_REGEX ]]
+    test $? -eq 0 || add_warning $LINE_NUMBER "Wrap the body at 72 characters (${#COMMIT_MSG_LINES[$i]} chars)"
+  done
+}
+
+# Remove leading subject line whitespace "for free"
+sed -i '' '1s/^ *//' $COMMIT_MSG_FILE
+
+read_commit_message
+validate_commit_message
+
+display_warnings
+test ${#WARNINGS[@]} -eq 0
