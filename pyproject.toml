@@ -13,9 +13,15 @@ url = "https://artifacts.rackspace.net/artifactory/api/pypi/pypi/simple/"
 python = "^3.6"
 requests = "^2.10"
 "github3.py" = "^1.1.0"
+tomlkit = "^0.5.3"
+qecommon_tools = ">1.1;<3.0"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^1.15"
+sphinx = "^2.0"
+sphinx-rtd-theme = "^0.4.3"
+sphinx_autodoc_typehints = "^1.6"
+ghp-import = "^0.5.5"
 
 [tool.poetry.scripts]
 gt-pr-checker = 'github_tools:pr_checker'
