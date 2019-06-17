@@ -16,7 +16,7 @@ from urllib.parse import urljoin
 import github3
 import github3.users
 import qecommon_tools
-from qecommon_tools import http_helpers
+from qecommon_tools import http_helpers, var_from_env
 import requests
 
 
@@ -174,6 +174,36 @@ def assign_pr_cli():
         token=args.token,
         keep_current=args.keep_current,
     )
+
+
+def post_docs_link(token=None, doc_path="HTMLReport"):
+    """
+    Post a docs link back to a PR from within the PR Checker Jenkins job.
+
+    Args:
+        token (str): GitHub access token
+        doc_path (str): the subpath from the job link where the docs can be found
+    """
+    repo = ghprb_info.repository
+    pull_id = ghprb_info.pull_request_id
+    domain = ghprb_info.domain
+    gh = GHPRSession(token, domain, repo, pull_id)
+
+    report_url = f"{var_from_env('BUILD_URL')}/{doc_path}"
+    gh.post_comment(f"Docs Link: {report_url}")
+
+
+def post_docs_link_cli():
+    """Handle CLI calls for post_docs_link."""
+    parser = get_github_commenter_parser("Docs Link PR Commenter")
+    parser.add_argument(
+        "--doc-path",
+        default="HTMLReport",
+        help="subpath from the Jenkins Job URL where the docs are located",
+    )
+    args = parser.parse_args()
+
+    post_docs_link(token=args.token, doc_path=args.doc_path)
 
 
 def main(token, organization, name_filter, pr_age):
