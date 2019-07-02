@@ -3,14 +3,13 @@
 import argparse
 import os
 import shutil
-import subprocess
 
 from urllib.parse import urljoin
 
 import github3
 import github3.users
 import qecommon_tools
-from qecommon_tools import http_helpers, var_from_env
+from qecommon_tools import var_from_env
 import requests
 
 
@@ -165,23 +164,6 @@ def install_hooks():
         _update_hooks(update_dir, args.force, source_hooks)
 
 
-def is_changed_diff_line(line):
-    """
-    Determine whether or not a give line is a changed line within a git diff string.
-
-    All lines that are actually changed start with a ``+`` or a ``-``.
-    File changes start with ``+++`` or ``---``.
-
-    Args:
-        line (str): The line to check.
-
-    Returns:
-        bool: Whether or not the line is a changed line.
-
-    """
-    return line.startswith(("+", "-"))
-
-
 class GHPRSession(requests.Session):
     """A GitHub session for managing a Pull Request."""
 
@@ -216,46 +198,6 @@ class GHPRSession(requests.Session):
     def post_comment(self, comment_body):
         """Post Comment to PR."""
         return self.post("comments", json={"body": comment_body})
-
-    def get_diff(self, base_branch="master", files="", only_changed_lines=False):
-        """
-        Get the diff of the PR.
-
-        Args:
-            base_branch (str): The branch against which the PR is based.
-            files (Union[str, list]): The specific files for which to get the diff.
-            only_changed_lines (bool): Whether or not to return only the lines
-                that were actually changed, omitting other diff related information.
-
-        Returns:
-            str: The diff of the PR.
-
-        """
-        # Get the latest commit to the base branch
-        response = self.get(
-            "https://{}/api/v3/repos/{}/branches/{}"
-            "".format(self._domain, self._repo, base_branch)
-        )
-        http_helpers.validate_response_status_code(200, response)
-        latest_base_branch_commit = response.json()["commit"]["sha"]
-
-        # Get the requested diff for the PR
-        if isinstance(files, list):
-            files = " ".join(files)
-        # Assumes your git is checked out to the latest PR commit
-        diff_command = "git diff --diff-filter=ACMRT {} HEAD {}" "".format(
-            latest_base_branch_commit, files
-        )
-        diff = subprocess.check_output(diff_command.split()).decode()
-
-        # Replace the escaped newlines so the return string format is as expected.
-        diff = diff.replace("\\n", "\n")
-
-        if only_changed_lines:
-            # Only include lines that were actually changed
-            return qecommon_tools.filter_lines(is_changed_diff_line, diff)
-
-        return diff
 
 
 class _GitHubPRBInfo(object):
