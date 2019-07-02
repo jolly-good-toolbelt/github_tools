@@ -2,7 +2,6 @@
 """Tools for GitHub interaction."""
 import argparse
 import os
-
 from urllib.parse import urljoin
 
 import github3
