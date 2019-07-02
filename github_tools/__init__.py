@@ -1,14 +1,8 @@
 #!/usr/bin/env python3
 """Tools for GitHub interaction."""
 import argparse
-import collections
-import datetime
-import email.mime.multipart
-import email.mime.text
 import os
-import re
 import shutil
-import smtplib
 import subprocess
 
 from urllib.parse import urljoin
@@ -20,100 +14,8 @@ from qecommon_tools import http_helpers, var_from_env
 import requests
 
 
-class UTC(datetime.tzinfo):
-    """UTC TZInfo."""
-
-    def utcoffset(self, dt):
-        """Return offset for UTC."""
-        return datetime.timedelta(0)
-
-    def tzname(self, dt):
-        """Return UTC TZ name."""
-        return "UTC"
-
-    def dst(self, dt):
-        """Return DST offset."""
-        return datetime.timedelta(0)
-
-
-NOW = datetime.datetime.now(UTC())
-PULL_WAIT = 20 * 60 * 60
-
-
 GH_URL = "https://github.rackspace.com"
 GH_TOKEN_ENV_KEY = "GH_TOKEN"
-
-
-def get_reviews(token, organization, pr_age, name_filter=""):
-    """
-    Collect open reviews for a given org.
-
-    Args:
-        token (str): GitHub access token
-        organization (str): Name of GitHub Organization to check
-        pr_age (int): minimum PR Age (in seconds) to be included
-        name_filter (Optional[str]): If provided, only check repos which belong
-            to teams whose names start with the provided string.
-
-    Returns:
-        collections.defaultdict: a dict with keys of assignee, and values as tuples
-        of assigned PR title and url.
-
-    """
-    reviews = collections.defaultdict(set)
-    gh = github3.enterprise_login(token=token, url=GH_URL)
-    org = gh.organization(organization)
-    repos = set()
-    for team in (x for x in org.teams() if x.name.startswith(name_filter)):
-        repos.update(team.repositories())
-    for repo in repos:
-        for pull in (x for x in repo.pull_requests() if x.state == "open"):
-            assignees = {x.login for x in pull.assignees}
-            if not assignees:
-                continue
-            secs_since_last_update = (NOW - pull.updated_at).total_seconds()
-            # Check the assignee list and ensure it is not solely the author.
-            # In the case of ambiguity,
-            # err on the side of caution and alert all parties involved.
-            if {pull.user.login} != assignees and secs_since_last_update > pr_age:
-                for assignee in assignees:
-                    reviews[assignee].add((pull.title, pull.html_url))
-    return reviews
-
-
-def send_email(user, review_list):
-    """
-    Send an email to a given user noting PRs pending review.
-
-    Args:
-        user (str): sso of user to be emailed
-        review_list (list): list of tuples of (title, url)
-            for all assigned PRs of which to notify the user.
-    """
-    msg = email.mime.multipart.MIMEMultipart("alternative")
-    msg["Subject"] = "Pull Requests Needing Attention"
-    msg["From"] = "rs-pr-checker@rackspace.com"
-    # Get Name and address from Hozer, since it's not in GitHub
-    req = requests.get("https://finder.rackspace.net/mini.php?q={}".format(user))
-    for line in req.text.splitlines():
-        match = re.match(
-            "^<tr><td>(?P<name>.*?)</td>.*<td>(?P<email>.*?)</td></tr>$", line
-        )
-        if match:
-            to_address = match.groupdict()["email"]
-            msg["To"] = "{} <{}>".format(*match.groups())
-    text = "The following Pull Requests need review:\n"
-    html = "<html><body><p>The following Pull Requests need review:</p><ul>"
-    for title, issue_url in review_list:
-        text += "{} - {}\n".format(title, issue_url)
-        html += '<li><a href="{}">{}</a></li>'.format(issue_url, title)
-    html += "</ul></body></html>"
-    msg.attach(email.mime.text.MIMEText(text, "plain"))
-    msg.attach(email.mime.text.MIMEText(html, "html"))
-
-    s = smtplib.SMTP("smtp1.dfw1.corp.rackspace.com")
-    s.sendmail(msg["From"], to_address, msg.as_string())
-    s.quit()
 
 
 def _get_credentials(token=None):
@@ -204,37 +106,6 @@ def post_docs_link_cli():
     args = parser.parse_args()
 
     post_docs_link(token=args.token, doc_path=args.doc_path)
-
-
-def main(token, organization, name_filter, pr_age):
-    """
-    Run a check for open PRs and send notification emails.
-
-    Args:
-        token (str): GitHub access token
-        organization (str): Name of GitHub Organization to check
-        name_filter (str): Only check repos which belong
-            to teams whose names start with the provided string.
-        pr_age (int): minimum PR Age (in seconds) to be included
-    """
-    for user, review_list in get_reviews(
-        token, organization, pr_age, name_filter=name_filter
-    ).items():
-        send_email(user, review_list)
-
-
-def pr_checker():
-    """Handle CLI calls to main."""
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--name-filter", help="Filter for team names, if needed", default=""
-    )
-    parser.add_argument("token", help="GitHub Token")
-    parser.add_argument("organization", help="GitHub Organization")
-    wait_help = "Time, in seconds, to check the PR age against"
-    parser.add_argument("--pr-age", default=PULL_WAIT, help=wait_help)
-    args = parser.parse_args()
-    main(args.token, args.organization, args.name_filter, args.pr_age)
 
 
 def _update_hooks(update_dir, force, source_hooks):
@@ -419,7 +290,3 @@ def get_github_commenter_parser(name="GitHub Pull Request Commenter"):
         "token", help="GitHub Personal Access Token for commenting user"
     )
     return parser
-
-
-if __name__ == "__main__":
-    pr_checker()
