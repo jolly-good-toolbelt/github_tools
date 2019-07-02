@@ -83,9 +83,9 @@ def post_docs_link(token=None, doc_path="HTMLReport"):
         token (str): GitHub access token
         doc_path (str): the subpath from the job link where the docs can be found
     """
-    repo = ghprb_info.repository
-    pull_id = ghprb_info.pull_request_id
-    domain = ghprb_info.domain
+    repo = var_from_env("ghprbGhRepository")
+    pull_id = var_from_env("ghprbPullId")
+    domain = var_from_env("ghprbPullLink").strip("https://").split("/")[0]
     gh = GHPRSession(token, domain, repo, pull_id)
 
     report_url = f"{var_from_env('BUILD_URL')}/{doc_path}"
@@ -139,29 +139,6 @@ class GHPRSession(requests.Session):
     def post_comment(self, comment_body):
         """Post Comment to PR."""
         return self.post("comments", json={"body": comment_body})
-
-
-class _GitHubPRBInfo(object):
-    """A class for getting GitHub Pull Request Builder related Jenkins env variables."""
-
-    @property
-    def repository(self):
-        return var_from_env("ghprbGhRepository")
-
-    @property
-    def pull_request_id(self):
-        return var_from_env("ghprbPullId")
-
-    @property
-    def domain(self):
-        return var_from_env("ghprbPullLink").strip("https://").split("/")[0]
-
-
-ghprb_info = _GitHubPRBInfo()
-"""
-_GitHubPRBInfo: An object that dynamically gets GHPRB Plugin
-related Jenkins env variables.
-"""
 
 
 def get_github_commenter_parser(name="GitHub Pull Request Commenter"):
