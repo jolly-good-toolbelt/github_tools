@@ -7,7 +7,6 @@ from urllib.parse import urljoin
 
 import github3
 import github3.users
-import qecommon_tools
 from qecommon_tools import var_from_env
 import requests
 
@@ -147,17 +146,15 @@ class _GitHubPRBInfo(object):
 
     @property
     def repository(self):
-        return qecommon_tools.var_from_env("ghprbGhRepository")
+        return var_from_env("ghprbGhRepository")
 
     @property
     def pull_request_id(self):
-        return qecommon_tools.var_from_env("ghprbPullId")
+        return var_from_env("ghprbPullId")
 
     @property
     def domain(self):
-        return (
-            qecommon_tools.var_from_env("ghprbPullLink").strip("https://").split("/")[0]
-        )
+        return var_from_env("ghprbPullLink").strip("https://").split("/")[0]
 
 
 ghprb_info = _GitHubPRBInfo()
