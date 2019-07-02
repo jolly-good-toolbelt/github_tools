@@ -112,7 +112,7 @@ class GHPRSession(requests.Session):
 
     def __init__(self, token, domain, repo, pull_id):
         super(GHPRSession, self).__init__()
-        self.headers.update({"Authorization": "token {}".format(token)})
+        self.headers.update({"Authorization": f"token {token}"})
         self._domain = domain
         self._repo = repo
         self._pull_id = pull_id
@@ -124,7 +124,7 @@ class GHPRSession(requests.Session):
         # but we will always positively grab the issue link from the PR
         # to prevent mis-commenting
         pull_data = self.get(
-            "https://{}/api/v3/repos/{}/pulls/{}".format(domain, repo, pull_id)
+            f"https://{domain}/api/v3/repos/{repo}/pulls/{pull_id}"
         ).json()
         # ensure a single trailing slash to support proper urljoin
         return pull_data.get("issue_url").rstrip("/") + "/"
