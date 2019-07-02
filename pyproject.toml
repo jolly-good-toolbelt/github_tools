@@ -24,7 +24,6 @@ sphinx_autodoc_typehints = "^1.6"
 ghp-import = "^0.5.5"
 
 [tool.poetry.scripts]
-gt-install-hook = 'github_tools:install_hooks'
 gt-assign-pr = 'github_tools:assign_pr_cli'
 gt-pr-doc-link = 'github_tools:post_docs_link_cli'
 [build-system]
