@@ -94,7 +94,10 @@ def post_docs_link(token=None, doc_path="HTMLReport"):
 
 def post_docs_link_cli():
     """Handle CLI calls for post_docs_link."""
-    parser = get_github_commenter_parser("Docs Link PR Commenter")
+    parser = argparse.ArgumentParser("Docs Link PR Commenter")
+    parser.add_argument(
+        "token", help="GitHub Personal Access Token for commenting user"
+    )
     parser.add_argument(
         "--doc-path",
         default="HTMLReport",
@@ -139,12 +142,3 @@ class GHPRSession(requests.Session):
     def post_comment(self, comment_body):
         """Post Comment to PR."""
         return self.post("comments", json={"body": comment_body})
-
-
-def get_github_commenter_parser(name="GitHub Pull Request Commenter"):
-    """Build parser for GH Comment CLI."""
-    parser = argparse.ArgumentParser(name)
-    parser.add_argument(
-        "token", help="GitHub Personal Access Token for commenting user"
-    )
-    return parser
