@@ -32,8 +32,8 @@ release = version
 
 # General information about your project.
 project = "Github Tools - A collection of tools for interactive with GitHub"
-copyright = "2018, Rackspace Quality Engineering"  # noqa
-author = "QE Engineering"
+copyright = "2018, Brad Brown & Doug Philips"  # noqa
+author = "Brad Brown & doug Philips"
 
 ######################################################
 # BELOW HERE YOU SHOULD BE ABLE TO LEAVE AS-IS.
@@ -100,11 +100,12 @@ html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
 commit_id = os.environ.get("ghprbPullId") or os.environ.get("GIT_COMMIT_ID")
 base_url = os.environ.get("ghprbPullLink")
 if not base_url:
+    github_url = os.environ.get("GT_GH_URL") or "https://github.com"
     if "GIT_ORIGIN_URL" not in os.environ:
         base_url = ""  # If this is non-empty, sphinx will make it clickable.
     else:
         owner_name = os.path.splitext(
             os.environ.get("GIT_ORIGIN_URL", "").split(":")[1]
         )[0]
-        base_url = f"https://github.rackspace.com/{owner_name}/tree/{commit_id}"
+        base_url = f"{github_url}/{owner_name}/tree/{commit_id}"
 html_context = {"build_id": commit_id, "build_url": base_url}
