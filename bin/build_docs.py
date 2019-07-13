@@ -49,6 +49,8 @@ def main():
         shutil.rmtree(DOCS_WORKING_DIRECTORY, ignore_errors=True)
 
     sphinx_apidoc_cmd = [
+        "poetry",
+        "run",
         "sphinx-apidoc",
         "--output-dir",
         DOCS_WORKING_DIRECTORY,
@@ -70,6 +72,8 @@ def main():
     os.environ["PYTHONPATH"] = os.path.curdir
     check_call(
         [
+            "poetry",
+            "run",
             "sphinx-build",
             "-c",
             DOCS_WORKING_DIRECTORY,
