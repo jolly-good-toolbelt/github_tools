@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "github_tools"
 version = "2.1.0"
-description = "A collection of tools for interactive with GitHub"
+description = "A collection of tools around Git and GitHub to make developers' lives easier."
 authors = ["Brad Brown <brad@bradsbrown.com>", "Ryan Casperson <casperson.ryan@gmail.com>", "Lewis Franklin <github@brolewis.com"]
 license = "MIT"
 readme = "README.rst"
@@ -15,7 +15,7 @@ requests = "^2.10"
 "github3.py" = "^1.1.0"
 tomlkit = "^0.5.3"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.dev-dependenciesPN6XUGNhwCGg44jGP7yv]
 pre-commit = "^1.15"
 sphinx = "^2.0"
 sphinx-rtd-theme = "^0.4.3"
