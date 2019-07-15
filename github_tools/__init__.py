@@ -84,7 +84,7 @@ def post_docs_link(token=None, doc_path="HTMLReport"):
     repo = os.environ.get("ghprbGhRepository")
     pull_id = os.environ.get("ghprbPullId")
     domain = os.environ.get("ghprbPullLink").strip("https://").split("/")[0]
-    gh = GHPRSession(token, domain, repo, pull_id)
+    gh = GHPRSession(_get_credentials(token)["token"], domain, repo, pull_id)
 
     report_url = f"{os.environ.get('BUILD_URL')}/{doc_path}"
     gh.post_comment(f"Docs Link: {report_url}")
@@ -94,7 +94,11 @@ def post_docs_link_cli():
     """Handle CLI calls for post_docs_link."""
     parser = argparse.ArgumentParser("Docs Link PR Commenter")
     parser.add_argument(
-        "token", help="GitHub Personal Access Token for commenting user"
+        "--token",
+        help=(
+            "The GH access token can also be set "
+            f'as "{GH_TOKEN_ENV_KEY}" environment variable.'
+        ),
     )
     parser.add_argument(
         "--doc-path",
