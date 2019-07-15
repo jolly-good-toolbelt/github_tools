@@ -1,0 +1,349 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>github_tools &mdash; Github Tools - A collection of tools for interactive with GitHub 2.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Github Tools - A collection of tools for interactive with GitHub
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../github_tools.html">github_tools package</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../MAINTAINER.html">Maintainer’s Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../MAINTAINER.html#top-level-scripts">Top-level scripts:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../MAINTAINER.html#bin-scripts"><code class="docutils literal notranslate"><span class="pre">bin/</span></code> scripts:</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Github Tools - A collection of tools for interactive with GitHub</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>github_tools</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for github_tools</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;Tools for GitHub interaction.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">urllib.parse</span> <span class="k">import</span> <span class="n">urljoin</span>
+
+<span class="kn">import</span> <span class="nn">github3</span>
+<span class="kn">import</span> <span class="nn">github3.users</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+
+<span class="n">GH_URL</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;GT_GH_URL&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">&quot;https://github.com&quot;</span>
+<span class="n">GH_TOKEN_ENV_KEY</span> <span class="o">=</span> <span class="s2">&quot;GH_TOKEN&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">_get_credentials</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">token</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="n">GH_TOKEN_ENV_KEY</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">token</span><span class="p">,</span> <span class="s2">&quot;Required GH access token value not provided!&quot;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;token&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">}</span>
+
+
+<div class="viewcode-block" id="assign_pr"><a class="viewcode-back" href="../github_tools.html#github_tools.assign_pr">[docs]</a><span class="k">def</span> <span class="nf">assign_pr</span><span class="p">(</span><span class="n">owner</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">pr_number</span><span class="p">,</span> <span class="n">users</span><span class="p">,</span> <span class="n">token</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keep_current</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Assign PR to a user.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        owner (str): name of user or org that owns the repo containing the PR</span>
+<span class="sd">        repo (str): name of the repo containing the PR</span>
+<span class="sd">        users (iterable): iterable of ssos for users to be assigned</span>
+<span class="sd">        token (Optional[str]): token to authenticate to GitHub.</span>
+<span class="sd">            If not provided, the `GH_TOKEN` environment variable will be checked.</span>
+<span class="sd">        keep_current (bool): if True, leave current assignees in place,</span>
+<span class="sd">            otherwise remove and assign *only* provided users.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">creds</span> <span class="o">=</span> <span class="n">_get_credentials</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
+    <span class="n">gh</span> <span class="o">=</span> <span class="n">github3</span><span class="o">.</span><span class="n">enterprise_login</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">GH_URL</span><span class="p">,</span> <span class="o">**</span><span class="n">creds</span><span class="p">)</span>
+    <span class="n">repo</span> <span class="o">=</span> <span class="n">gh</span><span class="o">.</span><span class="n">repository</span><span class="p">(</span><span class="n">owner</span><span class="p">,</span> <span class="n">repo</span><span class="p">)</span>
+    <span class="n">pr</span> <span class="o">=</span> <span class="n">repo</span><span class="o">.</span><span class="n">issue</span><span class="p">(</span><span class="n">pr_number</span><span class="p">)</span>
+    <span class="n">current_assignees</span> <span class="o">=</span> <span class="p">{</span><span class="n">u</span><span class="o">.</span><span class="n">login</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">pr</span><span class="o">.</span><span class="n">assignees</span><span class="p">}</span> <span class="k">if</span> <span class="n">keep_current</span> <span class="k">else</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">pr</span><span class="o">.</span><span class="n">edit</span><span class="p">(</span><span class="n">assignees</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">current_assignees</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">users</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="assign_pr_cli"><a class="viewcode-back" href="../github_tools.html#github_tools.assign_pr_cli">[docs]</a><span class="k">def</span> <span class="nf">assign_pr_cli</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Handle CLI calls to assign_pr.&quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;owner&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The name of the repository&#39;s owner/organization.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;repo&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The name of the repository.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;pr_number&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The PR Number to be assigned&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;users&quot;</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The usernames to assign.&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--token&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="p">(</span>
+            <span class="s2">&quot;The GH access token can also be set &quot;</span>
+            <span class="n">f</span><span class="s1">&#39;as &quot;</span><span class="si">{GH_TOKEN_ENV_KEY}</span><span class="s1">&quot; environment variable.&#39;</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--clear-current&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_false&quot;</span><span class="p">,</span>
+        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;keep_current&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Clear current assignees while adding provided users.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">assign_pr</span><span class="p">(</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">owner</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">repo</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">pr_number</span><span class="p">,</span>
+        <span class="n">args</span><span class="o">.</span><span class="n">users</span><span class="p">,</span>
+        <span class="n">token</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">token</span><span class="p">,</span>
+        <span class="n">keep_current</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">keep_current</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="post_docs_link"><a class="viewcode-back" href="../github_tools.html#github_tools.post_docs_link">[docs]</a><span class="k">def</span> <span class="nf">post_docs_link</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doc_path</span><span class="o">=</span><span class="s2">&quot;HTMLReport&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Post a docs link back to a PR from within the PR Checker Jenkins job.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        token (str): GitHub access token</span>
+<span class="sd">        doc_path (str): the subpath from the job link where the docs can be found</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">repo</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ghprbGhRepository&quot;</span><span class="p">)</span>
+    <span class="n">pull_id</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ghprbPullId&quot;</span><span class="p">)</span>
+    <span class="n">domain</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;ghprbPullLink&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">&quot;https://&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">gh</span> <span class="o">=</span> <span class="n">GHPRSession</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">pull_id</span><span class="p">)</span>
+
+    <span class="n">report_url</span> <span class="o">=</span> <span class="n">f</span><span class="s2">&quot;{os.environ.get(&#39;BUILD_URL&#39;)}/</span><span class="si">{doc_path}</span><span class="s2">&quot;</span>
+    <span class="n">gh</span><span class="o">.</span><span class="n">post_comment</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Docs Link: </span><span class="si">{report_url}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="post_docs_link_cli"><a class="viewcode-back" href="../github_tools.html#github_tools.post_docs_link_cli">[docs]</a><span class="k">def</span> <span class="nf">post_docs_link_cli</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Handle CLI calls for post_docs_link.&quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span><span class="s2">&quot;Docs Link PR Commenter&quot;</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;token&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="s2">&quot;?&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="n">GH_TOKEN_ENV_KEY</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">f</span><span class="s2">&quot;Github Access Token. May also be set via &#39;</span><span class="si">{GH_TOKEN_ENV_KEY}</span><span class="s2">&#39;.&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--doc-path&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;HTMLReport&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;subpath from the Jenkins Job URL where the docs are located&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="n">post_docs_link</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">doc_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">doc_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="GHPRSession"><a class="viewcode-back" href="../github_tools.html#github_tools.GHPRSession">[docs]</a><span class="k">class</span> <span class="nc">GHPRSession</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">Session</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A GitHub session for managing a Pull Request.&quot;&quot;&quot;</span>
+
+    <span class="n">base_url</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">pull_id</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GHPRSession</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s2">&quot;Authorization&quot;</span><span class="p">:</span> <span class="n">f</span><span class="s2">&quot;token </span><span class="si">{token}</span><span class="s2">&quot;</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_domain</span> <span class="o">=</span> <span class="n">domain</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_repo</span> <span class="o">=</span> <span class="n">repo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pull_id</span> <span class="o">=</span> <span class="n">pull_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_url</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">pull_id</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_base_url</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">domain</span><span class="p">,</span> <span class="n">repo</span><span class="p">,</span> <span class="n">pull_id</span><span class="p">):</span>
+        <span class="c1"># In repos without an active Issues section,</span>
+        <span class="c1"># the Issue ID and PR ID *should* match,</span>
+        <span class="c1"># but we will always positively grab the issue link from the PR</span>
+        <span class="c1"># to prevent mis-commenting</span>
+        <span class="n">pull_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="n">f</span><span class="s2">&quot;https://</span><span class="si">{domain}</span><span class="s2">/api/v3/repos/</span><span class="si">{repo}</span><span class="s2">/pulls/</span><span class="si">{pull_id}</span><span class="s2">&quot;</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        <span class="c1"># ensure a single trailing slash to support proper urljoin</span>
+        <span class="k">return</span> <span class="n">pull_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;issue_url&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span>
+
+<div class="viewcode-block" id="GHPRSession.request"><a class="viewcode-back" href="../github_tools.html#github_tools.GHPRSession.request">[docs]</a>    <span class="k">def</span> <span class="nf">request</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Place request.&quot;&quot;&quot;</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">urljoin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="p">,</span> <span class="n">url</span><span class="p">)</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">GHPRSession</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">response</span></div>
+
+<div class="viewcode-block" id="GHPRSession.post_comment"><a class="viewcode-back" href="../github_tools.html#github_tools.GHPRSession.post_comment">[docs]</a>    <span class="k">def</span> <span class="nf">post_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">comment_body</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Post Comment to PR.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;comments&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;body&quot;</span><span class="p">:</span> <span class="n">comment_body</span><span class="p">})</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Brad Brown, Ryan Casperson, and Lewis Franklin
+      
+        <span class="build">
+          Build
+          <a href="https://github.com/brolewis/github_tools/tree/3bf7fe8bb7ea57d2cfb97c0ba600854c0c55952c">3bf7fe8bb7ea57d2cfb97c0ba600854c0c55952c</a>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

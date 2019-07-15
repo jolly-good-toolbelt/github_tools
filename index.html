@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>GitHub Tools &mdash; Github Tools - A collection of tools for interactive with GitHub 2.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="github_tools package" href="github_tools.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> Github Tools - A collection of tools for interactive with GitHub
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="github_tools.html">github_tools package</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="MAINTAINER.html">Maintainer’s Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="MAINTAINER.html#top-level-scripts">Top-level scripts:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTAINER.html#bin-scripts"><code class="docutils literal notranslate"><span class="pre">bin/</span></code> scripts:</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Github Tools - A collection of tools for interactive with GitHub</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>GitHub Tools</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="github-tools">
+<h1>GitHub Tools<a class="headerlink" href="#github-tools" title="Permalink to this headline">¶</a></h1>
+<p>A collection of tools around Git and GitHub to make developers’ lives easier.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#gt-assign-pr">gt-assign-pr</a></p></li>
+<li><p><a class="reference internal" href="#gt-pr-doc-link">gt-pr-doc-link</a></p></li>
+</ul>
+<div class="section" id="gt-assign-pr">
+<h2>gt-assign-pr<a class="headerlink" href="#gt-assign-pr" title="Permalink to this headline">¶</a></h2>
+<p>A simple helper to assign a given PR to as set of users from the CLI.</p>
+<div class="section" id="usage">
+<h3>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h3>
+<p>This tool requires the use of a token (see <a class="reference internal" href="#using-tokens">Using Tokens</a>).
+By simply providing a <code class="docutils literal notranslate"><span class="pre">owner</span></code>, <code class="docutils literal notranslate"><span class="pre">repository</span></code>, <code class="docutils literal notranslate"><span class="pre">pr_number</span></code>
+and as many users as desired,
+you can assign the given PR to those users.
+By default, currently assigned users are kept,
+but they can be removed using the <code class="docutils literal notranslate"><span class="pre">--clear-current</span></code> flag.</p>
+</div>
+</div>
+<div class="section" id="gt-pr-doc-link">
+<h2>gt-pr-doc-link<a class="headerlink" href="#gt-pr-doc-link" title="Permalink to this headline">¶</a></h2>
+<p>A simple helper to post a link to docs back to a PR when run in a Jenkins job.</p>
+<div class="section" id="id1">
+<h3>Usage<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>This tool requires the use of a token (see <a class="reference internal" href="#using-tokens">Using Tokens</a>).
+In addition,
+this tool requires a <code class="docutils literal notranslate"><span class="pre">BUILD_URL</span></code> environment variable to be present
+(present automatically in a Jenkins job),
+and to have the docs already built
+and available via a URL subpath from the job URL,
+as would be generated by the <a class="reference external" href="https://plugins.jenkins.io/htmlpublisher">Jenkins HTML Publisher</a> plugin.</p>
+</div>
+</div>
+<div class="section" id="using-tokens">
+<h2>Using Tokens<a class="headerlink" href="#using-tokens" title="Permalink to this headline">¶</a></h2>
+<p>In order to provide for maximum flexibility,
+these tools are designed to work with GitHub Personal Access Tokens,
+which are needed for people using two-factor authentication
+or have access protected by SAML single sign on (SSO).
+GitHub provides instruction to <a class="reference external" href="https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line">obtain a token</a>.
+The token can be provided to all commands
+either via the <code class="docutils literal notranslate"><span class="pre">--token</span> <span class="pre">TOKEN</span></code> flag,
+or by setting <code class="docutils literal notranslate"><span class="pre">GH_TOKEN</span></code> in your environment.</p>
+</div>
+<div class="section" id="custom-github-url">
+<h2>Custom GitHub URL<a class="headerlink" href="#custom-github-url" title="Permalink to this headline">¶</a></h2>
+<p>By default, this project works with <a class="reference external" href="https://github.com">https://github.com</a>.
+In order to use an alternate URL, such as an enterprise install,
+you can provide the URL via an environment variable: <code class="docutils literal notranslate"><span class="pre">GT_GH_URL</span></code>.</p>
+</div>
+</div>
+<div class="section" id="pre-commit-hooks">
+<h1>pre-commit hooks<a class="headerlink" href="#pre-commit-hooks" title="Permalink to this headline">¶</a></h1>
+<p>This repository also provides three hooks, documented below,
+that can be installed by hand or via <a class="reference external" href="https://pre-commit.com">pre-commit</a>:</p>
+<div class="section" id="gt-commit-msg">
+<h2>gt-commit-msg<a class="headerlink" href="#gt-commit-msg" title="Permalink to this headline">¶</a></h2>
+<p>Ensure that a commit message conforms to some best practices:</p>
+<ol class="arabic simple">
+<li><p>Subject lines should not be longer than 50 characters</p></li>
+<li><p>Wrap the body at 72 characters</p></li>
+<li><p>Separate the subject from body with a blank line.</p></li>
+</ol>
+<p>These are taken from <a class="reference external" href="https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html">A Note About Git Commit Messages</a>.</p>
+</div>
+<div class="section" id="gt-self-check">
+<h2>gt-self-check<a class="headerlink" href="#gt-self-check" title="Permalink to this headline">¶</a></h2>
+<p>Can perform validations before making a commit.
+If an executable file named <code class="docutils literal notranslate"><span class="pre">self-check.sh</span></code> exists
+in the root of the repository and a Python, Ruby, or Gherkin file was changed,
+the checker is executed
+and the return status serves as a gate for the commit to occur.
+The check can be bypassed via <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span> <span class="pre">-n</span></code>.</p>
+</div>
+<div class="section" id="gt-prepare-commit-msg">
+<h2>gt-prepare-commit-msg<a class="headerlink" href="#gt-prepare-commit-msg" title="Permalink to this headline">¶</a></h2>
+<p>Prepare a commit message by including an appropriate prefix,
+when possible, based on the branch name.
+If the branch name contains a JIRA ID, that is included in the prefix.
+If the branch name also contains either “FF” or “Spike”,
+that is appended to the prefix.
+If a branch name, without including a JIRA ID,
+contains “FF”, “Spike”, “Enhancement” or “Fix”,
+those phrases are set as the prefix.
+All searches are case-insensitive.</p>
+</div>
+</div>
+<div class="section" id="beyond-the-quick-start">
+<h1>Beyond The Quick Start<a class="headerlink" href="#beyond-the-quick-start" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="github-tools-how-to-use-it-module-documentation">
+<h2>github_tools - How To Use It - Module Documentation<a class="headerlink" href="#github-tools-how-to-use-it-module-documentation" title="Permalink to this headline">¶</a></h2>
+<p>For users of this package, the nitty gritty coding and configuration details.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="github_tools.html">github_tools package</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="maintainer-s-documentation">
+<h1>Maintainer’s Documentation<a class="headerlink" href="#maintainer-s-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="MAINTAINER.html">Maintainer’s Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="MAINTAINER.html#top-level-scripts">Top-level scripts:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTAINER.html#bin-scripts"><code class="docutils literal notranslate"><span class="pre">bin/</span></code> scripts:</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="github_tools.html" class="btn btn-neutral float-right" title="github_tools package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Brad Brown, Ryan Casperson, and Lewis Franklin
+      
+        <span class="build">
+          Build
+          <a href="https://github.com/brolewis/github_tools/tree/3bf7fe8bb7ea57d2cfb97c0ba600854c0c55952c">3bf7fe8bb7ea57d2cfb97c0ba600854c0c55952c</a>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+github\_tools package
+=====================
+
+.. automodule:: github_tools
+   :members:
+   :undoc-members:
+   :show-inheritance:

@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>github_tools package &mdash; Github Tools - A collection of tools for interactive with GitHub 2.1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Maintainer’s Documentation" href="MAINTAINER.html" />
+    <link rel="prev" title="GitHub Tools" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Github Tools - A collection of tools for interactive with GitHub
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">github_tools package</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="MAINTAINER.html">Maintainer’s Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="MAINTAINER.html#top-level-scripts">Top-level scripts:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MAINTAINER.html#bin-scripts"><code class="docutils literal notranslate"><span class="pre">bin/</span></code> scripts:</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Github Tools - A collection of tools for interactive with GitHub</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>github_tools package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/github_tools.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-github_tools">
+<span id="github-tools-package"></span><h1>github_tools package<a class="headerlink" href="#module-github_tools" title="Permalink to this headline">¶</a></h1>
+<p>Tools for GitHub interaction.</p>
+<dl class="class">
+<dt id="github_tools.GHPRSession">
+<em class="property">class </em><code class="sig-prename descclassname">github_tools.</code><code class="sig-name descname">GHPRSession</code><span class="sig-paren">(</span><em class="sig-param">token</em>, <em class="sig-param">domain</em>, <em class="sig-param">repo</em>, <em class="sig-param">pull_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/github_tools.html#GHPRSession"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#github_tools.GHPRSession" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">requests.sessions.Session</span></code></p>
+<p>A GitHub session for managing a Pull Request.</p>
+<dl class="attribute">
+<dt id="github_tools.GHPRSession.base_url">
+<code class="sig-name descname">base_url</code><em class="property"> = None</em><a class="headerlink" href="#github_tools.GHPRSession.base_url" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="github_tools.GHPRSession.post_comment">
+<code class="sig-name descname">post_comment</code><span class="sig-paren">(</span><em class="sig-param">comment_body</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/github_tools.html#GHPRSession.post_comment"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#github_tools.GHPRSession.post_comment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post Comment to PR.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="github_tools.GHPRSession.request">
+<code class="sig-name descname">request</code><span class="sig-paren">(</span><em class="sig-param">method</em>, <em class="sig-param">url</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/github_tools.html#GHPRSession.request"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#github_tools.GHPRSession.request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Place request.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="github_tools.assign_pr">
+<code class="sig-prename descclassname">github_tools.</code><code class="sig-name descname">assign_pr</code><span class="sig-paren">(</span><em class="sig-param">owner</em>, <em class="sig-param">repo</em>, <em class="sig-param">pr_number</em>, <em class="sig-param">users</em>, <em class="sig-param">token=None</em>, <em class="sig-param">keep_current=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/github_tools.html#assign_pr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#github_tools.assign_pr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign PR to a user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>owner</strong> (<em>str</em>) – name of user or org that owns the repo containing the PR</p></li>
+<li><p><strong>repo</strong> (<em>str</em>) – name of the repo containing the PR</p></li>
+<li><p><strong>users</strong> (<em>iterable</em>) – iterable of ssos for users to be assigned</p></li>
+<li><p><strong>token</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – token to authenticate to GitHub.
+If not provided, the <cite>GH_TOKEN</cite> environment variable will be checked.</p></li>
+<li><p><strong>keep_current</strong> (<em>bool</em>) – if True, leave current assignees in place,
+otherwise remove and assign <em>only</em> provided users.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="github_tools.assign_pr_cli">
+<code class="sig-prename descclassname">github_tools.</code><code class="sig-name descname">assign_pr_cli</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/github_tools.html#assign_pr_cli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#github_tools.assign_pr_cli" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle CLI calls to assign_pr.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="github_tools.post_docs_link">
+<code class="sig-prename descclassname">github_tools.</code><code class="sig-name descname">post_docs_link</code><span class="sig-paren">(</span><em class="sig-param">token=None</em>, <em class="sig-param">doc_path='HTMLReport'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/github_tools.html#post_docs_link"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#github_tools.post_docs_link" title="Permalink to this definition">¶</a></dt>
+<dd><p>Post a docs link back to a PR from within the PR Checker Jenkins job.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>token</strong> (<em>str</em>) – GitHub access token</p></li>
+<li><p><strong>doc_path</strong> (<em>str</em>) – the subpath from the job link where the docs can be found</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="github_tools.post_docs_link_cli">
+<code class="sig-prename descclassname">github_tools.</code><code class="sig-name descname">post_docs_link_cli</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/github_tools.html#post_docs_link_cli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#github_tools.post_docs_link_cli" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle CLI calls for post_docs_link.</p>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="MAINTAINER.html" class="btn btn-neutral float-right" title="Maintainer’s Documentation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="GitHub Tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Brad Brown, Ryan Casperson, and Lewis Franklin
+      
+        <span class="build">
+          Build
+          <a href="https://github.com/brolewis/github_tools/tree/3bf7fe8bb7ea57d2cfb97c0ba600854c0c55952c">3bf7fe8bb7ea57d2cfb97c0ba600854c0c55952c</a>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
