@@ -21,7 +21,7 @@ ghp-import = "^0.5.5"
 [tool.poetry.scripts]
 gt-assign-pr = 'github_tools:assign_pr_cli'
 gt-pr-doc-link = 'github_tools:post_docs_link_cli'
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
-
