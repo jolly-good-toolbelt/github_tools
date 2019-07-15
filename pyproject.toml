@@ -15,7 +15,7 @@ requests = "^2.10"
 "github3.py" = "^1.1.0"
 tomlkit = "^0.5.3"
 
-[tool.poetry.dev-dependenciesPN6XUGNhwCGg44jGP7yv]
+[tool.poetry.dev-dependencies]
 pre-commit = "^1.15"
 sphinx = "^2.0"
 sphinx-rtd-theme = "^0.4.3"
