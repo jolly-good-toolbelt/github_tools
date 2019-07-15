@@ -6,11 +6,10 @@ from urllib.parse import urljoin
 
 import github3
 import github3.users
-from qecommon_tools import var_from_env
 import requests
 
 
-GH_URL = "https://github.rackspace.com"
+GH_URL = os.environ.get("GT_GH_URL") or "https://github.com"
 GH_TOKEN_ENV_KEY = "GH_TOKEN"
 
 
@@ -82,12 +81,12 @@ def post_docs_link(token=None, doc_path="HTMLReport"):
         token (str): GitHub access token
         doc_path (str): the subpath from the job link where the docs can be found
     """
-    repo = var_from_env("ghprbGhRepository")
-    pull_id = var_from_env("ghprbPullId")
-    domain = var_from_env("ghprbPullLink").strip("https://").split("/")[0]
+    repo = os.environ.get("ghprbGhRepository")
+    pull_id = os.environ.get("ghprbPullId")
+    domain = os.environ.get("ghprbPullLink").strip("https://").split("/")[0]
     gh = GHPRSession(token, domain, repo, pull_id)
 
-    report_url = f"{var_from_env('BUILD_URL')}/{doc_path}"
+    report_url = f"{os.environ.get('BUILD_URL')}/{doc_path}"
     gh.post_comment(f"Docs Link: {report_url}")
 
 
@@ -95,7 +94,10 @@ def post_docs_link_cli():
     """Handle CLI calls for post_docs_link."""
     parser = argparse.ArgumentParser("Docs Link PR Commenter")
     parser.add_argument(
-        "token", help="GitHub Personal Access Token for commenting user"
+        "token",
+        nargs="?",
+        default=os.getenv(GH_TOKEN_ENV_KEY, None),
+        help=f"Github Access Token. May also be set via '{GH_TOKEN_ENV_KEY}'.",
     )
     parser.add_argument(
         "--doc-path",
