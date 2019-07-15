@@ -2,7 +2,7 @@
 name = "github_tools"
 version = "2.1.0"
 description = "A collection of tools for interactive with GitHub"
-authors = ["Brad Brown <brad@bradsbrown.com>", "Doug Philips <dgou@mac.com>"]
+authors = ["Brad Brown <brad@bradsbrown.com>", "Ryan Casperson <casperson.ryan@gmail.com>", "Lewis Franklin <github@brolewis.com"]
 license = "MIT"
 
 [tool.poetry.dependencies]

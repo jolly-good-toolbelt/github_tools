@@ -32,8 +32,8 @@ release = version
 
 # General information about your project.
 project = "Github Tools - A collection of tools for interactive with GitHub"
-copyright = "2018, Brad Brown & Doug Philips"  # noqa
-author = "Brad Brown & doug Philips"
+copyright = "2019, Brad Brown, Ryan Casperson, and Lewis Franklin"  # noqa
+author = "Brad Brown, Ryan Casperson, and Lewis Franklin"
 
 ######################################################
 # BELOW HERE YOU SHOULD BE ABLE TO LEAVE AS-IS.
