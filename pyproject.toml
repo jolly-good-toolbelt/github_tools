@@ -1,9 +1,13 @@
 [tool.poetry]
 name = "github_tools"
 version = "2.1.0"
-description = "A collection of tools for interactive with GitHub"
+description = "A collection of tools around Git and GitHub to make developers' lives easier."
 authors = ["Brad Brown <brad@bradsbrown.com>", "Ryan Casperson <casperson.ryan@gmail.com>", "Lewis Franklin <github@brolewis.com"]
 license = "MIT"
+readme = "README.rst"
+homepage = "https://jolly-good-toolbelt.github.io/github_tools/"
+documentation = "https://jolly-good-toolbelt.github.io/github_tools/"
+repository = "https://github.com/jolly-good-toolbelt/github_tools"
 
 [tool.poetry.dependencies]
 python = "^3.6"
