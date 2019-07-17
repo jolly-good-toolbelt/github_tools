@@ -4,15 +4,15 @@ Beyond The Quick Start
 ======================
 
 
-github_tools - How To Use It - Module Documentation
-----------------------------------------------------------
+jolly_github_toolbelt - How To Use It - Module Documentation
+------------------------------------------------------------
 
 For users of this package, the nitty gritty coding and configuration details.
 
 .. toctree::
    :maxdepth: 4
 
-   github_tools
+   jolly_github_toolbelt
 
 
 Maintainer's Documentation
