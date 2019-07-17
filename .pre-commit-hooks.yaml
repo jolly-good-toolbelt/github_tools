@@ -1,6 +1,6 @@
 -   id: gt-commit-msg
     name: gt-commit-msg
-    entry: github_tools/hooks/commit-msg
+    entry: jolly_github_toolbelt/hooks/commit-msg
     language: script
     require_serial: true
     description: 'gt-commit-message: Build good commit messages'
@@ -8,13 +8,13 @@
     stages: [commit-msg]
 -   id: gt-self-check
     name: gt-self-check
-    entry: github_tools/hooks/pre-commit
+    entry: jolly_github_toolbelt/hooks/pre-commit
     language: script
     require_serial: true
     description: 'gt-self-check: Run self-check (if present)'
 -   id: gt-prepare-commit-msg
     name: gt-prepare-commit-msg
-    entry: github_tools/hooks/prepare-commit-msg
+    entry: jolly_github_toolbelt/hooks/prepare-commit-msg
     language: script
     require_serial: true
     description: 'gt-prepare-commit-msg: Build commit messages based on the branch name'

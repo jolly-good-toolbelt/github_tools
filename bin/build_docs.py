@@ -58,8 +58,8 @@ def main():
         "--force",
         "--module-first",
     ]
-    print("Building github_tools API docs")
-    check_call(sphinx_apidoc_cmd + ["github_tools"], cwd=BASE_DIR)
+    print("Building API docs")
+    check_call(sphinx_apidoc_cmd + ["jolly_github_toolbelt"], cwd=BASE_DIR)
 
     # Copy over all the top level rST files so we don't
     # have to keep a duplicate list here.

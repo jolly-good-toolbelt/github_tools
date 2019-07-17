@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "github_tools"
+name = "jolly_github_toolbelt"
 version = "2.1.0"
 description = "A collection of tools around Git and GitHub to make developers' lives easier."
 authors = ["Brad Brown <brad@bradsbrown.com>", "Ryan Casperson <casperson.ryan@gmail.com>", "Lewis Franklin <github@brolewis.com"]
 license = "MIT"
 readme = "README.rst"
-homepage = "https://jolly-good-toolbelt.github.io/github_tools/"
-documentation = "https://jolly-good-toolbelt.github.io/github_tools/"
-repository = "https://github.com/jolly-good-toolbelt/github_tools"
+homepage = "https://jolly-good-toolbelt.github.io/jolly_github_toolbelt/"
+documentation = "https://jolly-good-toolbelt.github.io/jolly_github_toolbelt/"
+repository = "https://github.com/jolly-good-toolbelt/jolly_github_toolbelt"
 
 [tool.poetry.dependencies]
 python = "^3.6"
@@ -23,8 +23,8 @@ sphinx_autodoc_typehints = "^1.6"
 ghp-import = "^0.5.5"
 
 [tool.poetry.scripts]
-gt-assign-pr = 'github_tools:assign_pr_cli'
-gt-pr-doc-link = 'github_tools:post_docs_link_cli'
+gt-assign-pr = 'jolly_github_toolbelt:assign_pr_cli'
+gt-pr-doc-link = 'jolly_github_toolbelt:post_docs_link_cli'
 
 [build-system]
 requires = ["poetry>=0.12"]
