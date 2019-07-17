@@ -1,1 +1,1 @@
-include github_tools/hooks/*
+include jolly_github_toolbelt/hooks/*
