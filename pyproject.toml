@@ -21,10 +21,14 @@ sphinx = "^2.0"
 sphinx-rtd-theme = "^0.4.3"
 sphinx_autodoc_typehints = "^1.6"
 ghp-import = "^0.5.5"
+jgt_tools = "^0.1.3"
 
 [tool.poetry.scripts]
 gt-assign-pr = 'jolly_github_toolbelt:assign_pr_cli'
 gt-pr-doc-link = 'jolly_github_toolbelt:post_docs_link_cli'
+
+[tool.jgt_tools]
+run_tests_commands = ["echo NO TESTS AVAILABLE"]
 
 [build-system]
 requires = ["poetry>=0.12"]
