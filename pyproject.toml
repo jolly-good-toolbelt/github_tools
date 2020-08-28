@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jolly_github_toolbelt"
-version = "2.1.0"
+version = "2.1.1"
 description = "A collection of tools around Git and GitHub to make developers' lives easier."
 authors = ["Brad Brown <brad@bradsbrown.com>", "Ryan Casperson <casperson.ryan@gmail.com>", "Lewis Franklin <github@brolewis.com"]
 license = "MIT"
