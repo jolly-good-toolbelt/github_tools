@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "jolly_github_toolbelt"
-version = "2.1.0"
+version = "2.1.1"
 description = "A collection of tools around Git and GitHub to make developers' lives easier."
 authors = ["Brad Brown <brad@bradsbrown.com>", "Ryan Casperson <casperson.ryan@gmail.com>", "Lewis Franklin <github@brolewis.com"]
 license = "MIT"
@@ -13,15 +13,10 @@ repository = "https://github.com/jolly-good-toolbelt/jolly_github_toolbelt"
 python = "^3.6"
 requests = "^2.10"
 "github3.py" = "^1.1.0"
-tomlkit = "^0.5.3"
 
 [tool.poetry.dev-dependencies]
-pre-commit = "^1.15"
-sphinx = "^2.0"
-sphinx-rtd-theme = "^0.4.3"
 sphinx_autodoc_typehints = "^1.6"
-ghp-import = "^0.5.5"
-jgt_tools = "^0.1.3"
+jgt_tools = "^0.4.0"
 
 [tool.poetry.scripts]
 gt-assign-pr = 'jolly_github_toolbelt:assign_pr_cli'
